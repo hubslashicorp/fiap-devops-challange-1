@@ -28,9 +28,9 @@ if [ $HOSTNAME = "mysql-lab" ]; then
   echo 'INSTALANDO WGET'
   sudo apt-get install wget -y
   echo 'BAIXANDO VERSAO DE MYSQL ESPECIFICADA NO PDF'
-  wget -c https://dev.mysql.com/downloads/file/?id=500428
+  wget -c https://dev.mysql.com/downloads/file/?id=500428 -O mysql-apt-config.deb
   echo 'INSTALANDO REPOSITORIO'
-  sudo dpkg -i mysql-apt-config_0.8.16-1_all.deb
+  sudo dpkg -i mysql-apt-config.deb
   echo 'BAIXANDO ATUALIZACOES PARA O REPO LOCAL'
   sudo apt-get update
   echo 'INSTALANDO PACOTE DO MYSQL-SERVER'
