@@ -84,7 +84,6 @@ $ vagrant up
 $ vagrant ssh <vm-nome>
 ```
 
-
 5.0 - Validando se VM esta Online:
 ``` 
 $ vagrant status
