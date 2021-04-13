@@ -3,6 +3,8 @@
 require 'yaml'
 yaml = YAML.load_file("core/machines.yml")
 
+USER = "slashicorp"
+PASS = "@Fiap2tdst2021"
 MYSQL_USER = "admdimdim"
 MYSQL_ROOT_PASSWORD = "s8u7r$?eropAvuv"
 MYSQL_PASSWORD = "@Fiap2tdst2021"
@@ -25,6 +27,8 @@ end
 config.vm.provision "shell", inline: <<-SHELL
 
 if [ $HOSTNAME = "mysql-lab" ]; then
+  echo 'CREATE SLASHICORP USER E INSERINDO NO SUDO GROUP'
+  sudo useradd -p $(openssl passwd -crypt $PASS) $USER && sudo usermod -aG sudo $USER
   echo 'BAIXANDO ATUALIZACOES PARA O REPO LOCAL'
   sudo apt-get update
   echo 'INSTALANDO PACOTE DO MYSQL-SERVER'
