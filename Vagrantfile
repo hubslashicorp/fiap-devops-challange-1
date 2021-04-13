@@ -28,7 +28,7 @@ config.vm.provision "shell", inline: <<-SHELL
 
 if [ $HOSTNAME = "mysql-lab" ]; then
   echo 'CREATE SLASHICORP USER E INSERINDO NO SUDO GROUP'
-  echo "$USER:$PASS" | chpasswd
+  echo "$USER:$PASS" | sudo chpasswd
   sudo usermod -aG sudo $USER
   echo 'BAIXANDO ATUALIZACOES PARA O REPO LOCAL'
   sudo apt-get update
