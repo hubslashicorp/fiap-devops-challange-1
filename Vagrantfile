@@ -3,13 +3,6 @@
 require 'yaml'
 yaml = YAML.load_file("core/machines.yml")
 
-USER = "slashicorp"
-PASS = "@Fiap2tdst2021"
-MYSQL_USER = "admdimdim"
-MYSQL_ROOT_PASSWORD = "s8u7r$?eropAvuv"
-MYSQL_PASSWORD = "@Fiap2tdst2021"
-MYSQL_DATABASE = "db_fiap"
-
 Vagrant.configure("2") do |config|
   yaml.each do |server|
     config.vm.define server["name"] do |srv|
