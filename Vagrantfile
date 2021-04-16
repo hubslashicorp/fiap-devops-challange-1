@@ -27,78 +27,89 @@ end
 config.vm.provision "shell", inline: <<-SHELL
 
 if [ $HOSTNAME = "mysql-lab" ]; then
+  echo '########################################################'
+  echo 'ATUALIZANDO S.O'
+  sudo apt update -y && sudo apt upgrade -y && sudo apt install wget -y
   echo '.'
   echo '.'
   echo '########################################################'
-  echo 'Download and Install the Latest Updates for the OS'
+  echo 'BAIXANDO SCRIPT DE INSTALACAO DO DOCKER'
   echo '########################################################'
   echo '.'
   echo '.'
-  sudo apt-get update && apt-get upgrade -y
+  curl -fsSL https://get.docker.com -o get-docker.sh
   echo '.'
   echo '.'
   echo '########################################################'
-  echo 'Set the Server Timezone to CST'
+  echo 'EXECUTANDO SCRIPT DE INSTALACAO DOCKER'
   echo '########################################################'
   echo '.'
   echo '.'
-  echo "America/Chicago" > /etc/timezone
-  sudo dpkg-reconfigure -f noninteractive tzdata
+  sudo sh get-docker.sh
   echo '.'
   echo '.'
   echo '########################################################'
-  echo 'Habilitando Ubuntu Firewall e liberando SSH & MySQL Ports'
+  echo 'DANDO PREVILEGIOS AO GRUPO DOCKER PARA USUARIO VAGRANT'
   echo '########################################################'
   echo '.'
   echo '.'
-  ufw enable
-  ufw allow 22
-  ufw allow 3306
+  sudo usermod -a -G docker vagrant
   echo '.'
   echo '.'
   echo '########################################################'
-  echo 'Instalando packages essenciais'
+  echo 'INICIANDO DOCKER'
   echo '########################################################'
   echo '.'
   echo '.'
-  sudo apt-get -y install zsh htop
+  sudo systemctl start docker
   echo '.'
   echo '.'
   echo '########################################################'
-  echo 'Instalando MySQL Server em Non-Interactive mode. Default root password sera var.MYSQL_ROOT_PASSWORD'
+  echo 'SETANDO DOCKER PARA INICIAR JUNTO COM O S.O'
+  echo '########################################################'
+  echo '.'
+  echo '.'
+  sudo systemctl enable docker
+  echo '.'
+  echo '.'
+  echo '########################################################'
+  echo 'REALIZANDO DOWNLOAD DA ULTIMA VERSAO DE DOCKER-COMPOSE'
+  echo '########################################################'
+  echo '.'
+  echo '.'
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  echo '.'
+  echo '.'
   echo '########################################################'  
-  echo '.'
-  echo '.'
-  echo "mysql-server-5.6 mysql-server/root_password password $MYSQL_ROOT_PASSWORD" | sudo debconf-set-selections
-  echo "mysql-server-5.6 mysql-server/root_password_again password $MYSQL_ROOT_PASSWORD" | sudo debconf-set-selections
-  sudo apt-get -y install mysql-server-5.6
-  echo '.'
-  echo '.'
-  echo '########################################################'
-  echo 'Executando MySQL Secure Installation wizard'
+  echo 'APLICANDO PERMISSOES DE EXECUTAVEL PARA O SH'
   echo '########################################################'
   echo '.'
   echo '.'
-  mysql_secure_installation
-  sed -i 's/127\.0\.0\.1/0\.0\.0\.0/g' /etc/mysql/my.cnf
-  sudo mysql -uroot -p$MYSQL_ROOT_PASSWORD -e 'USE mysql; UPDATE `user` SET `Host`="%" WHERE `User`="root" AND `Host`="localhost"; DELETE FROM `user` WHERE `Host` != "%" AND `User`="root"; FLUSH PRIVILEGES;'
-  sudo service mysql restart
+  sudo chmod +x /usr/local/bin/docker-compose
   echo '.'
   echo '.'
   echo '########################################################'
-  echo 'CRIANDO DATABASE'
+  echo 'CRIANDO LINK SIMBOLICO PARA O BINARIO DO DOCKER-COMPOSE'
   echo '########################################################'
   echo '.'
   echo '.'
-  sudo mysql -uroot -p$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE $MYSQL_DATABASE"
+  sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
   echo '.'
   echo '.'
   echo '########################################################'
-  echo 'PERMISSIONANDO USUARIO NA DATABASE'
+  echo 'VALIDANDO VERSAO DO DOCKER-COMPOSE'
   echo '########################################################'
   echo '.'
   echo '.'
-  sudo mysql -uroot -p$MYSQL_ROOT_PASSWORD -e "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PASSWORD'"
+  docker-compose --version
+  echo '.'
+  echo '.'
+  echo '########################################################'
+  echo 'APLICANDO NOSSO DOCKER-COMPOSE'
+  echo '########################################################'
+  echo '.'
+  echo '.'
+  docker-compose up
 fi;
   date +"%H:%M:%S"
   sleep 5
