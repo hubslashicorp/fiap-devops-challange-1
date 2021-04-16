@@ -5,7 +5,7 @@ yaml = YAML.load_file("core/machines.yml")
 
 unless Vagrant.has_plugin?("vagrant-docker-compose")
   system("vagrant plugin install vagrant-docker-compose")
-  puts "Dependencies installed, please try the command again."
+  puts "Dependências instaladas, tente o comando vagrant up novamente."
   exit
 end
 
