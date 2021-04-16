@@ -109,7 +109,15 @@ if [ $HOSTNAME = "mysql-lab" ]; then
   echo '########################################################'
   echo '.'
   echo '.'
-  docker-compose up
+  docker-compose up -d
+  echo '.'
+  echo '.'
+  echo '########################################################'
+  echo 'LISTANDO CONTAINERS'
+  echo '########################################################'
+  echo '.'
+  echo '.'
+  docker-compose ps
 fi;
   date +"%H:%M:%S"
   sleep 5
