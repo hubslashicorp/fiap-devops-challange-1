@@ -16,9 +16,8 @@ services:
             - ./src/uploads:/var/www/html/wp-content/uploads
         environment:
             WORDPRESS_DB_HOST: mysql
-            WORDPRESS_DB_NAME: db_fiap
             WORDPRESS_DB_USER: admdimdim
-            WORDPRESS_DB_PASSWORD: @Fiap2tdst2021
+            WORDPRESS_DB_PASSWORD: Fiap2tdst2021
 
     mysql:
         container_name: mysql
@@ -34,7 +33,7 @@ services:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: db_fiap
             MYSQL_USER: admdimdim
-            MYSQL_PASSWORD: @Fiap2tdst2021
+            MYSQL_PASSWORD: Fiap2tdst2021
 
     phpmyadmin:
         container_name: phpmyadmin
