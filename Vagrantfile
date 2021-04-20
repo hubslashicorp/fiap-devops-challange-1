@@ -29,23 +29,11 @@ end
 config.vm.provision "shell", inline: <<-SHELL
 
 if [ $HOSTNAME = "mysql-lab" ]; then
-  echo '########################################################'
-  echo 'VALIDANDO VERSAO DO DOCKER-COMPOSE'
-  echo '########################################################'
-  echo '.'
-  echo '.'
-  docker-compose --version
-  echo '.'
-  echo '.'
-  echo '########################################################'
-  echo 'LISTANDO CONTAINERS'
-  echo '########################################################'
-  echo '.'
-  echo '.'
-  sleep 4
-  ls -lha
-  docker-compose ps
-  sleep 4
+  echo 'Para acessar as aplicaçoes provisionadas com Docker a partir do host mysql-lab:'
+  echo 'wordpress: http://192.168.66.20:8080'
+  echo 'phpmyadmin: http://192.168.66.20:8081'
+  echo 'mysql: http://192.168.66.20:8081'
+  sleep 10
 fi;
   date +"%H:%M:%S"
 SHELL

@@ -27,8 +27,6 @@ services:
         ports:
             - "3307:3306"
         restart: always
-        volumes:
-            - ./data/mysql:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: db_fiap
