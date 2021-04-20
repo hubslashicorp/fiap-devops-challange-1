@@ -36,6 +36,10 @@ if [ $HOSTNAME = "mysql-lab" ]; then
   sleep 10
 fi;
   date +"%H:%M:%S"
+  echo 'Para acessar as aplicaçoes provisionadas com Docker a partir do host mysql-lab:'
+  echo 'wordpress: http://192.168.66.20:8080'
+  echo 'phpmyadmin: http://192.168.66.20:8081'
+  echo 'mysql: http://192.168.66.20:3307'
 SHELL
 
 end
