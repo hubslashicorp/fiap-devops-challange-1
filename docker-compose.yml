@@ -11,11 +11,9 @@ services:
         restart: always
         depends_on:
             - mysql
-        volumes:
-            - ./src/themes:/var/www/html/wp-content/themes
-            - ./src/uploads:/var/www/html/wp-content/uploads
         environment:
             WORDPRESS_DB_HOST: mysql
+            WORDPRESS_DB_NAME: db_fiap
             WORDPRESS_DB_USER: admdimdim
             WORDPRESS_DB_PASSWORD: Fiap2tdst2021
 
