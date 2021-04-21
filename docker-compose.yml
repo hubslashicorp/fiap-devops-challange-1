@@ -30,17 +30,3 @@ services:
             MYSQL_DATABASE: db_fiap
             MYSQL_USER: admdimdim
             MYSQL_PASSWORD: Fiap2tdst2021
-
-    phpmyadmin:
-        container_name: phpmyadmin
-        build:
-            context: etc/phpmyadmin
-            dockerfile: Dockerfile
-        ports:
-            - "8081:80"
-        restart: always
-        depends_on:
-            - mysql
-        environment:
-            PMA_ARBITRARY: 1
-            PMA_HOST: mysql
